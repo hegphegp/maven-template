@@ -92,7 +92,7 @@
           </descriptorRefs>
           <archive>
             <manifest>
-              <mainClass>org.example.App</mainClass> <!-- 此处指定main方法入口的class -->
+              <mainClass>top.codingfly.Application</mainClass> <!-- 此处指定main方法入口的class -->
             </manifest>
           </archive>
         </configuration>
