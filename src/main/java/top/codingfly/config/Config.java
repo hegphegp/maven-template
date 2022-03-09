@@ -10,7 +10,7 @@ public class Config {
     public static Db db = null;
 
     static {
-        SqlLog.INSTANCE.init(true, false, true, Level.DEBUG);
+        SqlLog.INSTANCE.init(true, false, true, Level.INFO);
         configDB();
     }
 

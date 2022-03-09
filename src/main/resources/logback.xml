@@ -1,5 +1,5 @@
 <configuration scan="true" scanPeriod="60 seconds" debug="false">
-    <property name="log.path" value="/data/logs/a-service"></property>
+    <property name="log.path" value="/data/logs/maven-template-20220309"></property>
 
     <appender name="consoleAppender" class="ch.qos.logback.core.ConsoleAppender">
         <layout class="ch.qos.logback.classic.PatternLayout">
@@ -113,14 +113,22 @@
     <!-- 只有local环境，才可以输出控制台信息，否则在服务器执行 jar -jar 命令，会输出所有控制台日志，严重影响性能 -->
     <!-- <springProfile name="local,test"> -->
 <!--    <springProfile name="local">-->
-        <root level="DEBUG">
-            <appender-ref ref="consoleAppender" />
-        </root>
+<!--        <root level="DEBUG">-->
+<!--            <appender-ref ref="consoleAppender" />-->
+<!--        </root>-->
 <!--    </springProfile>-->
 
-    <logger name="org.example" level="INFO">
+    <if condition='property("consoleDebug")!=null'>
+        <then>
+            <root level="DEBUG">
+                <appender-ref ref="consoleAppender" />
+            </root>
+        </then>
+    </if>
+
+    <logger name="top.codingfly" level="INFO">
 <!--        <appender-ref ref="debugLog" />-->
-<!--        <appender-ref ref="infoLog" />-->
+        <appender-ref ref="infoLog" />
 <!--        <appender-ref ref="warnLog" />-->
         <appender-ref ref="errorLog" />
     </logger>

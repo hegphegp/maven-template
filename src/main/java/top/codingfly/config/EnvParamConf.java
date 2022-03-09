@@ -22,7 +22,7 @@ public class EnvParamConf {
     static {
         Properties properties = System.getProperties();
         Set<Object> keySet = properties.keySet();
-        System.out.println(JSON.toJSONString(properties, SerializerFeature.PrettyFormat));
+        logger.info(JSON.toJSONString(properties, SerializerFeature.PrettyFormat));
         for (Object key:keySet) {
             if ((key instanceof String)==false) {
                 continue;
