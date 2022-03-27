@@ -17,6 +17,7 @@
             <Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{85} - %msg%n</Pattern>
             <charset>UTF-8</charset>
         </encoder>
+        <File>${log.path}/debug.log</File>
         <!-- 必需要指定rollingPolicy 与 triggeringPolicy 属性 否则不会生成文件-->
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- 后缀名为.log不会压缩分割后的文件，只有后缀名为.gz或者.zip -->
@@ -39,6 +40,7 @@
             <Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{85} - %msg%n</Pattern>
             <charset>UTF-8</charset>
         </encoder>
+        <File>${log.path}/info.log</File>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- 后缀名为.log不会压缩分割后的文件，只有后缀名为.gz或者.zip -->
             <fileNamePattern>${log.path}/info.%d{yyyy-MM-dd}.%i.gz</fileNamePattern>
@@ -64,6 +66,7 @@
             <Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{85} - %msg%n</Pattern>
             <charset>UTF-8</charset>
         </encoder>
+        <File>${log.path}/warn.log</File>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- 后缀名为.log不会压缩分割后的文件，只有后缀名为.gz或者.zip -->
             <fileNamePattern>${log.path}/warn.%d{yyyy-MM-dd}.%i.gz</fileNamePattern>
@@ -90,6 +93,7 @@
             <Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{85} - %msg%n</Pattern>
             <charset>UTF-8</charset>
         </encoder>
+        <File>${log.path}/error.log</File>
         <!-- 必需要指定rollingPolicy 与 triggeringPolicy 属性   否则不会生成文件-->
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- 后缀名为.log不会压缩分割后的文件，只有后缀名为.gz或者.zip -->
@@ -118,12 +122,19 @@
 <!--        </root>-->
 <!--    </springProfile>-->
 
-    <if condition='property("consoleDebug")!=null'>
+    <!-- <if condition='property("consoleDebug")!=null'> 这个写法是错误的，害死人了 -->
+    <!-- 判断property是否为null -->
+    <if condition='isNull("consoleDebug")'>
         <then>
+            <root level="INFO">
+                <appender-ref ref="infoLog" />
+            </root>
+        </then>
+        <else>
             <root level="DEBUG">
                 <appender-ref ref="consoleAppender" />
             </root>
-        </then>
+        </else>
     </if>
 
     <logger name="top.codingfly" level="INFO">
