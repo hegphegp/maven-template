@@ -6,13 +6,19 @@ import top.codingfly.config.Config;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class Application {
+    private static Set<String> programEnvs = new HashSet() {{ add("local"); add("test"); add("prod"); }};
     private static Logger logger = LoggerFactory.getLogger(Application.class);
 
     public static void main(String[] args) throws Exception {
+        if (programEnvs.contains(System.getProperty("programEnv"))==false) {
+            throw new RuntimeException("请配置 programEnv 参数，该参数取值只有 local，test 和 prod");
+        }
         for (int i = 0; i < 10; i++) {
             logger.debug("debug===debug===debug===debug===debug");
             logger.info("info===info===info===info===info");
