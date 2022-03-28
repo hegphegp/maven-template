@@ -124,24 +124,53 @@
 
     <!-- <if condition='property("consoleDebug")!=null'> 这个写法是错误的，害死人了 -->
     <!-- 判断property是否为null -->
-    <if condition='isNull("consoleDebug")'>
+<!--    <if condition='isNull("consoleDebug")'>-->
+<!--        <then>-->
+<!--            <root level="INFO">-->
+<!--                <appender-ref ref="infoLog" />-->
+<!--            </root>-->
+<!--        </then>-->
+<!--        <else>-->
+<!--            <root level="DEBUG">-->
+<!--                <appender-ref ref="consoleAppender" />-->
+<!--            </root>-->
+<!--        </else>-->
+<!--    </if>-->
+
+    <if condition='property("programEnv").contains("local")'>
+        <then>
+            <root level="DEBUG">
+                <appender-ref ref="consoleAppender" />
+            </root>
+        </then>
+    </if>
+
+    <if condition='property("programEnv").contains("test")'>
         <then>
             <root level="INFO">
                 <appender-ref ref="infoLog" />
             </root>
+            <logger name="top.codingfly" level="INFO">
+                <appender-ref ref="debugLog" />
+                <appender-ref ref="infoLog" />
+                <appender-ref ref="warnLog" />
+                <appender-ref ref="errorLog" />
+            </logger>
         </then>
-        <else>
-            <root level="DEBUG">
-                <appender-ref ref="consoleAppender" />
-            </root>
-        </else>
     </if>
 
-    <logger name="top.codingfly" level="INFO">
-<!--        <appender-ref ref="debugLog" />-->
-        <appender-ref ref="infoLog" />
-<!--        <appender-ref ref="warnLog" />-->
-        <appender-ref ref="errorLog" />
-    </logger>
+    <if condition='property("programEnv").contains("prod")'>
+        <then>
+            <root level="INFO">
+                <appender-ref ref="infoLog" />
+            </root>
+            <logger name="top.codingfly" level="INFO">
+                <appender-ref ref="debugLog" />
+                <appender-ref ref="infoLog" />
+                <appender-ref ref="warnLog" />
+                <appender-ref ref="errorLog" />
+            </logger>
+        </then>
+    </if>
 
 </configuration>

@@ -13,6 +13,12 @@ public class Application {
     private static Logger logger = LoggerFactory.getLogger(Application.class);
 
     public static void main(String[] args) throws Exception {
+        for (int i = 0; i < 10; i++) {
+            logger.debug("debug===debug===debug===debug===debug");
+            logger.info("info===info===info===info===info");
+            logger.warn("warn===warn===warn===warn===warn");
+            logger.error("error===error===error===error===error");
+        }
         List<Entity> list = Config.db.findAll("magic_api_info");
         while (true) {
             Thread.sleep(300);
